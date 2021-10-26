@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8125034D2728031A0097821A /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8125034C2728031A0097821A /* City.swift */; };
+		8125034F272804270097821A /* CityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8125034E272804270097821A /* CityViewModel.swift */; };
 		81DA586727179288005ED135 /* WeatherForecastApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA586627179288005ED135 /* WeatherForecastApp.swift */; };
-		81DA586927179288005ED135 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA586827179288005ED135 /* ContentView.swift */; };
+		81DA586927179288005ED135 /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA586827179288005ED135 /* CityView.swift */; };
 		81DA586B2717928A005ED135 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81DA586A2717928A005ED135 /* Assets.xcassets */; };
 		81DA586E2717928A005ED135 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81DA586D2717928A005ED135 /* Preview Assets.xcassets */; };
 		81DA58792717928A005ED135 /* WeatherForecastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA58782717928A005ED135 /* WeatherForecastTests.swift */; };
@@ -33,9 +35,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8125034C2728031A0097821A /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		8125034E272804270097821A /* CityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityViewModel.swift; sourceTree = "<group>"; };
 		81DA586327179288005ED135 /* Weather Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather Forecast.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81DA586627179288005ED135 /* WeatherForecastApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastApp.swift; sourceTree = "<group>"; };
-		81DA586827179288005ED135 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		81DA586827179288005ED135 /* CityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityView.swift; sourceTree = "<group>"; };
 		81DA586A2717928A005ED135 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81DA586D2717928A005ED135 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81DA586F2717928A005ED135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 		81DA5891271796E8005ED135 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8125034C2728031A0097821A /* City.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -142,7 +147,7 @@
 		81DA5892271796EE005ED135 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				81DA586827179288005ED135 /* ContentView.swift */,
+				81DA586827179288005ED135 /* CityView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 		81DA5893271796F3005ED135 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				8125034E272804270097821A /* CityViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -283,8 +289,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81DA586927179288005ED135 /* ContentView.swift in Sources */,
+				81DA586927179288005ED135 /* CityView.swift in Sources */,
 				81DA586727179288005ED135 /* WeatherForecastApp.swift in Sources */,
+				8125034D2728031A0097821A /* City.swift in Sources */,
+				8125034F272804270097821A /* CityViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
