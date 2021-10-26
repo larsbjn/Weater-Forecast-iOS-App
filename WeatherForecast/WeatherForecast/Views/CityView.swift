@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CityView: View {
-    @StateObject var cityViewModel = CityViewModel()
+    @ObservedObject var cityViewModel = CityViewModel()
     @State private var cityName: String = ""
     
     var body: some View {
