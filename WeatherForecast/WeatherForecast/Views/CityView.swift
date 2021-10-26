@@ -16,9 +16,11 @@ struct CityView: View {
             List {
                 ForEach(cityViewModel.cities) { city in
                     NavigationLink(destination: WeatherView(city: city)) {
-                        CityRow(city: city, cityViewModel: cityViewModel)
+                        Text(city.name)
                     }
-                }
+                }.onDelete(perform: { indexSet in
+                    cityViewModel.deleteCity(indexSet)
+                })
                 HStack {
                     TextField("City name", text: $cityName)
                     Button("Add") {
@@ -30,21 +32,6 @@ struct CityView: View {
                 }
             }
             .navigationTitle("Cities")
-        }
-    }
-}
-
-struct CityRow: View {
-    var city: City
-    @StateObject var cityViewModel: CityViewModel
-    
-    var body: some View {
-        HStack {
-            Text(city.name)
-            Button("Delete") {
-                cityViewModel.removeCity(city.name)
-            }
-            .foregroundColor(.red)
         }
     }
 }

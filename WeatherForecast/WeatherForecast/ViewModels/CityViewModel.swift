@@ -20,18 +20,11 @@ class CityViewModel : ObservableObject {
     
     func addCity(_ name: String) -> Void {
         cities.append(City(id: UUID(), name: name))
-        print(cities)
         saveAllCities()
     }
     
-    func removeCity(_ name: String) -> Void {
-        print(cities)
-        for i in 0...cities.count {
-            if cities[i].name == name {
-                cities.remove(at: i)
-                break
-            }
-        }
+    func deleteCity(_ index: IndexSet) -> Void {
+        cities.remove(atOffsets: index)
         saveAllCities()
     }
     
