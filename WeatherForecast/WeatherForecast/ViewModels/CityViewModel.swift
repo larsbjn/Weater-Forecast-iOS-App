@@ -20,7 +20,7 @@ class CityViewModel : ObservableObject {
     }()
     
     func addCity(_ name: String) -> Void {
-        FindCity(name: name, action: { city in
+        CallFindCityAPI(name: name, action: { city in
             self.cities.append(city)
             self.saveAllCities()
         })

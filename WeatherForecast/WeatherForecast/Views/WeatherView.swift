@@ -26,7 +26,7 @@ struct WeatherView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(weatherViewModel.weathers) { weather in
+                    ForEach(weatherViewModel.days) { weather in
                         DayColumn(weather: weather).onTapGesture {
                             weatherViewModel.selectDay(weather: weather)
                         }
@@ -41,19 +41,15 @@ struct WeatherView: View {
             
             Spacer()
         }
-        
-        
-            
-            
     }
 }
 
 struct DayColumn: View {
-    var weather: Weather
+    var weather: Day
     
     var body: some View {
         VStack {
-            Text("\(weather.getDay())/\(weather.getMonth())")
+            Text("\(weather.getDate())")
                 .tracking(2.0)
                 .foregroundColor(weather.isSelected ? .blue : .primary)
                 .padding(.bottom, 1.0)
@@ -67,10 +63,11 @@ struct WeatherInformation: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
     
     var body: some View {
-        let weather = weatherViewModel.getSelectedDay()
+        let day = weatherViewModel.getSelectedDay()
+        let weather = day!.weather
         
-        Text("\((weather?.getDay())!)/\((weather?.getMonth())!)")
-        Text("Lat: \(weatherViewModel.city.coord.lat) Lon: \(weatherViewModel.city.coord.lon)")
+        Text("\(day!.getDate())")
+        Text("Day Temp: \(weather.temp.day) Min Temp: \(weather.temp.min) Max Temp: \(weather.temp.max)")
     }
 }
 
