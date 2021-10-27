@@ -55,7 +55,7 @@ struct DayColumn: View {
                 .padding(.bottom, 1.0)
             Image(systemName: "sun.max").foregroundColor(.yellow).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
         }
-        .padding(.horizontal, 12.0)
+        .padding(.horizontal, 5.0)
     }
 }
 
