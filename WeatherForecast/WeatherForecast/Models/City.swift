@@ -8,6 +8,20 @@
 import Foundation
 
 struct City: Identifiable, Codable {
-    let id: UUID
+    let id = UUID()
     let name: String
+    let coord: Coord
+    
+    private enum CodingKeys: String, CodingKey {
+        case name, coord
+    }
+}
+
+struct Coord: Codable {
+    let lat: Float
+    let lon: Float
+}
+
+struct CityList: Codable {
+    let list: [City]
 }

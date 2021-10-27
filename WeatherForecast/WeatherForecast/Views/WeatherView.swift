@@ -9,7 +9,12 @@ import SwiftUI
 
 struct WeatherView: View {
     var city: City
-    @ObservedObject var weatherViewModel = WeatherViewModel()
+    @ObservedObject var weatherViewModel: WeatherViewModel
+    
+    init(city: City) {
+        self.city = city
+        self.weatherViewModel = WeatherViewModel(city: city)
+    }
     
     var body: some View {
         VStack() {
@@ -49,9 +54,10 @@ struct DayColumn: View {
     var body: some View {
         VStack {
             Text("\(weather.getDay())/\(weather.getMonth())")
-                .tracking(/*@START_MENU_TOKEN@*/2.0/*@END_MENU_TOKEN@*/)
-                .foregroundColor(weather.isSelected ? .blue : .black)
-            Image("wi-day-sunny")
+                .tracking(2.0)
+                .foregroundColor(weather.isSelected ? .blue : .primary)
+                .padding(.bottom, 1.0)
+            Image(systemName: "sun.max").foregroundColor(.yellow).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
         }
         .padding(.horizontal, 12.0)
     }
@@ -63,12 +69,13 @@ struct WeatherInformation: View {
     var body: some View {
         let weather = weatherViewModel.getSelectedDay()
         
-        Text((weather?.getDay())!)
+        Text("\((weather?.getDay())!)/\((weather?.getMonth())!)")
+        Text("Lat: \(weatherViewModel.city.coord.lat) Lon: \(weatherViewModel.city.coord.lon)")
     }
 }
 
 struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView(city: City(id: UUID(), name: "Odense"))
+        WeatherView(city: City(name: "Odense", coord: Coord(lat: 1.2, lon: 2.1)))
     }
 }
