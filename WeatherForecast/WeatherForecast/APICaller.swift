@@ -7,46 +7,26 @@
 
 import Foundation
 
-func CallFindCityAPI(name: String, action: @escaping (_ city: City) -> Void) {
-    URLSession.shared.dataTask(with: findCityURL(name: name), completionHandler: { data, response, error in
-        guard let data = data, error == nil else {
-            print(error!)
-            return
-        }
-        
-        var result: CityList?
-        do {
-            result = try JSONDecoder().decode(CityList.self, from: data)
-        }
-        catch {
-            print("Failed to convert \(error.localizedDescription)")
-        }
-
-        guard let parsed = result, let city = parsed.list.first else {
-            print("Error parsing data to JSON or no cities found")
-            return
-        }
-        DispatchQueue.main.async {
-            action(city)
-        }
-    }).resume()
+func JSONConvert<T: Codable>(data: Data) -> T? {
+    var result: T?
+    do {
+        result = try JSONDecoder().decode(T.self, from: data)
+    }
+    catch {
+        print("Failed to convert \(error.localizedDescription)")
+    }
+    return result
 }
 
-func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: WeatherWeek) -> Void) {
-    URLSession.shared.dataTask(with: weatherForecastUrl(coord: coord), completionHandler: { data, response, error in
+func CallAPI<T: Codable>(url: URL, action: @escaping (_ actionParam: T) -> Void) {
+    URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
         guard let data = data, error == nil else {
             print(error!)
             return
         }
         
-        var result: WeatherWeek?
-        do {
-            result = try JSONDecoder().decode(WeatherWeek.self, from: data)
-        }
-        catch {
-            print("Failed to convert \(error.localizedDescription)")
-        }
-
+        let result: T? = JSONConvert(data: data)
+        
         guard let parsed = result else {
             print("Error parsing data to JSON")
             return
@@ -55,7 +35,16 @@ func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: Weat
             action(parsed)
         }
     }).resume()
-    /*let temp = """
+}
+
+func CallFindCityAPI(name: String, action: @escaping (_ city: City) -> Void) {
+    CallAPI(url: FindCityURL(name: name), action: action)
+}
+
+func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: WeatherWeek) -> Void) {
+    //CallAPI(url: WeatherForecastUrl(coord: coord), action: action)
+    
+    let temp = """
     {
         "lat": 33.44,
         "lon": -94.04,
@@ -396,13 +385,13 @@ func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: Weat
     }
     DispatchQueue.main.async {
         action(parsed)
-    }*/
+    }
 }
 
-private func findCityURL(name: String) -> URL {
+private func FindCityURL(name: String) -> URL {
     return URL(string: "https://api.openweathermap.org/data/2.5/find?q=\(name)&units=metric&appid=adba724c1b24f0ac1891014c813065c8")!
 }
 
-private func weatherForecastUrl(coord: Coord) -> URL {
+private func WeatherForecastUrl(coord: Coord) -> URL {
     return URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(coord.lat)&lon=\(coord.lon)&exclude=current,minutely,hourly,alerts&units=metric&appid=adba724c1b24f0ac1891014c813065c8")!
 }
