@@ -26,9 +26,9 @@ struct WeatherView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(weatherViewModel.days) { weather in
-                        DayColumn(weather: weather).onTapGesture {
-                            weatherViewModel.selectDay(weather: weather)
+                    ForEach(weatherViewModel.days) { day in
+                        DayColumn(day: day).onTapGesture {
+                            weatherViewModel.selectDay(weather: day)
                         }
                     }
                 }
@@ -45,15 +45,28 @@ struct WeatherView: View {
 }
 
 struct DayColumn: View {
-    var weather: Day
+    var day: Day
     
     var body: some View {
+        let icon = day.weather.weather[0].getIcon()
         VStack {
-            Text("\(weather.getDate())")
+            Text("\(day.getDate())")
                 .tracking(2.0)
-                .foregroundColor(weather.isSelected ? .blue : .primary)
+                .foregroundColor(day.isSelected ? .blue : .primary)
                 .padding(.bottom, 1.0)
-            Image(systemName: "sun.max").foregroundColor(.yellow).font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            if #available(iOS 15.0, *) {
+                Image(systemName: icon.name)
+                    .frame(width: 50.0, height: 50.0)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(icon.primaryColor, icon.secondaryColor)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            } else {
+                // Fallback on earlier versions
+                Image(systemName: icon.name)
+                    .frame(width: 50.0, height: 50.0)
+                    .foregroundColor(icon.primaryColor)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            }
         }
         .padding(.horizontal, 5.0)
     }

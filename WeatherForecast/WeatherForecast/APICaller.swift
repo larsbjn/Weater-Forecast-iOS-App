@@ -42,9 +42,9 @@ func CallFindCityAPI(name: String, action: @escaping (_ city: CityList) -> Void)
 }
 
 func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: WeatherWeek) -> Void) {
-    CallAPI(url: WeatherForecastUrl(coord: coord), action: action)
+    //CallAPI(url: WeatherForecastUrl(coord: coord), action: action)
     
-    /*let temp = """
+    let temp = """
     {
         "lat": 33.44,
         "lon": -94.04,
@@ -385,7 +385,7 @@ func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: Weat
     }
     DispatchQueue.main.async {
         action(parsed)
-    }*/
+    }
 }
 
 private func FindCityURL(name: String) -> URL {
