@@ -104,9 +104,7 @@ struct DailyWeather: View {
     var body: some View {
         VStack {
             ForEach(weatherViewModel.days) { day in
-                DayColumn(day: day).onTapGesture {
-                    weatherViewModel.selectDay(weather: day)
-                }
+                DayColumn(day: day)
             }
         }
     }
@@ -120,7 +118,6 @@ struct DayColumn: View {
         HStack(spacing: 30.0) {
             Text("\(day.getDate())")
                 .tracking(2.0)
-                .foregroundColor(day.isSelected ? .blue : .primary)
                 .padding(.bottom, 1.0)
             if #available(iOS 15.0, *) {
                 Image(systemName: icon.name)
