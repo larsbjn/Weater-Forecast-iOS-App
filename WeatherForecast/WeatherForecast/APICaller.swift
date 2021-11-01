@@ -42,9 +42,9 @@ func CallFindCityAPI(name: String, action: @escaping (_ city: CityList) -> Void)
 }
 
 func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: WeatherWeek) -> Void) {
-    //CallAPI(url: WeatherForecastUrl(coord: coord), action: action)
+    CallAPI(url: WeatherForecastUrl(coord: coord), action: action)
     
-    let temp = """
+    /*let temp = """
     {
         "lat": 33.44,
         "lon": -94.04,
@@ -385,7 +385,7 @@ func CallWeatherForecastAPI(coord: Coord, action: @escaping (_ weatherWeek: Weat
     }
     DispatchQueue.main.async {
         action(parsed)
-    }
+    }*/
 }
 
 private func FindCityURL(name: String) -> URL {
@@ -393,5 +393,5 @@ private func FindCityURL(name: String) -> URL {
 }
 
 private func WeatherForecastUrl(coord: Coord) -> URL {
-    return URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(coord.lat)&lon=\(coord.lon)&exclude=current,minutely,hourly,alerts&units=metric&appid=adba724c1b24f0ac1891014c813065c8")!
+    return URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=\(coord.lat)&lon=\(coord.lon)&exclude=current,minutely,alerts&units=metric&appid=adba724c1b24f0ac1891014c813065c8")!
 }

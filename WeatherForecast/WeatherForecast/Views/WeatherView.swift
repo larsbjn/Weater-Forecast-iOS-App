@@ -48,7 +48,7 @@ struct DayColumn: View {
     var day: Day
     
     var body: some View {
-        let icon = day.weather.weather[0].getIcon()
+        let icon = day.dayWeather.weather[0].getIcon()
         VStack {
             Text("\(day.getDate())")
                 .tracking(2.0)
@@ -77,10 +77,13 @@ struct WeatherInformation: View {
     
     var body: some View {
         let day = weatherViewModel.getSelectedDay()
-        let weather = day!.weather
+        let dayWeather = day!.dayWeather
+        let hourlyWeather = day!.getCurrentHourWeather()
         
-        Text("\(day!.getDate())")
-        Text("Day Temp: \(weather.temp.day) Min Temp: \(weather.temp.min) Max Temp: \(weather.temp.max)")
+        Text(String(format: "%.1f°", hourlyWeather!.temp)).font(.system(size: 60))
+        Text("\(dayWeather.weather[0].description.capitalized)")
+        Text(String(format: "H: %.1f° L: %.1f°", dayWeather.temp.max, dayWeather.temp.min))
+        Text("\(day!.hourlyWeather.count)")
     }
 }
 

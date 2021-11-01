@@ -9,7 +9,17 @@ import Foundation
 import SwiftUI
 
 struct WeatherWeek: Codable {
+    let timezone_offset: Float
+    let hourly: [HourWeather]
     let daily: [DayWeather]
+}
+
+struct HourWeather: Codable {
+    let dt: Int
+    let temp: Float
+    let feels_like: Float
+    let wind_speed: Float
+    let weather: [Weather]
 }
 
 struct DayWeather: Codable {

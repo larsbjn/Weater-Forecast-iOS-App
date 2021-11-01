@@ -17,11 +17,24 @@ class WeatherViewModel: ObservableObject {
         
         CallWeatherForecastAPI(coord: city.coord) { [self] weatherWeek in
             for dayWeather in weatherWeek.daily {
-                let date = Date(timeIntervalSince1970: Double(dayWeather.dt))
-                self.days.append(Day(date: date, weather: dayWeather))
+                // Add timezone offset to match the timezone with the one from the location. So UTC time + timezone offset
+                let date = Date(timeIntervalSince1970: Double(dayWeather.dt + Int(weatherWeek.timezone_offset)))
+                self.days.append(Day(date: date, dayWeather: dayWeather, hourlyWeather: []))
             }
+            
             guard self.days.count > 0 else { return }
             self.days[selectedDayIndex].toggleSelected()
+            
+            for day in 0...days.count - 1 {
+                let startOfTheDay = days[day].date.timeIntervalSince1970 - days[day].date.timeIntervalSince1970.truncatingRemainder(dividingBy: 86400)
+                let endOfTheDay = startOfTheDay + 86400
+                
+                for hour in weatherWeek.hourly {
+                    if (Int(startOfTheDay) <= hour.dt && hour.dt < Int(endOfTheDay)) {
+                        days[day].hourlyWeather.append(hour)
+                    }
+                }
+            }
         }
     }
     
@@ -32,7 +45,7 @@ class WeatherViewModel: ObservableObject {
     }
     
     func getSelectedDay() -> Day? {
-        guard selectedDayIndex >= 0 else { return nil}
+        guard selectedDayIndex >= 0, !days.isEmpty else { return nil}
         return days[selectedDayIndex]
     }
 }
