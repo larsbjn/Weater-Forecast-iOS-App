@@ -21,25 +21,93 @@ struct WeatherView: View {
             Text(city.name)
                 .font(.title)
                 
-            Divider()
-                .padding(.horizontal)
-            
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(weatherViewModel.days) { day in
-                        DayColumn(day: day).onTapGesture {
-                            weatherViewModel.selectDay(weather: day)
-                        }
-                    }
-                }
-            }.padding()
-            
-            Divider()
-                .padding(.horizontal)
-            
             WeatherInformation(weatherViewModel: weatherViewModel)
             
-            Spacer()
+            Divider()
+                .padding(.horizontal)
+            
+            ScrollView(.vertical) {
+                HourlyWeather(weatherViewModel: weatherViewModel)
+                Divider()
+                    .padding(.horizontal)
+                DailyWeather(weatherViewModel: weatherViewModel)
+                Divider()
+                    .padding(.horizontal)
+            }
+            
+            
+            
+        }
+    }
+}
+
+struct WeatherInformation: View {
+    @ObservedObject var weatherViewModel: WeatherViewModel
+    
+    var body: some View {
+        let hour = weatherViewModel.getCurrentHourWeather()
+        let dayWeather = weatherViewModel.getCurrentDay()?.dayWeather
+        
+        Text(String(format: "%.1f°", hour!.temp)).font(.system(size: 60))
+        Text("\(hour!.weather[0].description.capitalized)")
+        Text(String(format: "H: %.1f° L: %.1f°", dayWeather!.temp.max, dayWeather!.temp.min))
+    }
+}
+
+struct HourlyWeather: View {
+    @ObservedObject var weatherViewModel: WeatherViewModel
+    
+    var body: some View {
+        
+        
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(weatherViewModel.hourly) { hour in
+                    HourlyColumn(hour: hour)
+                }
+            }
+        }.padding()
+    }
+}
+
+struct HourlyColumn: View {
+    var hour: HourWeather
+    
+    var body: some View {
+        let icon = hour.weather[0].getIcon()
+        VStack {
+            Text("\(hour.getHour())")
+                .tracking(2.0)
+                .padding(.bottom, 1.0)
+            if #available(iOS 15.0, *) {
+                Image(systemName: icon.name)
+                    .frame(width: 50.0, height: 50.0)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(icon.primaryColor, icon.secondaryColor)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            } else {
+                // Fallback on earlier versions
+                Image(systemName: icon.name)
+                    .frame(width: 50.0, height: 50.0)
+                    .foregroundColor(icon.primaryColor)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+            }
+            Text(String(format: "%.1f°", hour.temp))
+        }
+        .padding(.horizontal, 5.0)
+    }
+}
+
+struct DailyWeather: View {
+    @ObservedObject var weatherViewModel: WeatherViewModel
+    
+    var body: some View {
+        VStack {
+            ForEach(weatherViewModel.days) { day in
+                DayColumn(day: day).onTapGesture {
+                    weatherViewModel.selectDay(weather: day)
+                }
+            }
         }
     }
 }
@@ -49,7 +117,7 @@ struct DayColumn: View {
     
     var body: some View {
         let icon = day.dayWeather.weather[0].getIcon()
-        VStack {
+        HStack(spacing: 30.0) {
             Text("\(day.getDate())")
                 .tracking(2.0)
                 .foregroundColor(day.isSelected ? .blue : .primary)
@@ -67,23 +135,9 @@ struct DayColumn: View {
                     .foregroundColor(icon.primaryColor)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
             }
+            Text(String(format: "H: %.1f° L: %.1f°", day.dayWeather.temp.max, day.dayWeather.temp.min))
         }
         .padding(.horizontal, 5.0)
-    }
-}
-
-struct WeatherInformation: View {
-    @ObservedObject var weatherViewModel: WeatherViewModel
-    
-    var body: some View {
-        let day = weatherViewModel.getSelectedDay()
-        let dayWeather = day!.dayWeather
-        let hourlyWeather = day!.getCurrentHourWeather()
-        
-        Text(String(format: "%.1f°", hourlyWeather!.temp)).font(.system(size: 60))
-        Text("\(dayWeather.weather[0].description.capitalized)")
-        Text(String(format: "H: %.1f° L: %.1f°", dayWeather.temp.max, dayWeather.temp.min))
-        Text("\(day!.hourlyWeather.count)")
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 class WeatherViewModel: ObservableObject {
     @Published var days: [Day] = []
+    @Published var hourly: [HourWeather] = []
     var city: City
     var selectedDayIndex: Int = 0
     
@@ -19,22 +20,12 @@ class WeatherViewModel: ObservableObject {
             for dayWeather in weatherWeek.daily {
                 // Add timezone offset to match the timezone with the one from the location. So UTC time + timezone offset
                 let date = Date(timeIntervalSince1970: Double(dayWeather.dt + Int(weatherWeek.timezone_offset)))
-                self.days.append(Day(date: date, dayWeather: dayWeather, hourlyWeather: []))
+                self.days.append(Day(date: date, dayWeather: dayWeather))
             }
+            hourly = weatherWeek.hourly
             
             guard self.days.count > 0 else { return }
             self.days[selectedDayIndex].toggleSelected()
-            
-            for day in 0...days.count - 1 {
-                let startOfTheDay = days[day].date.timeIntervalSince1970 - days[day].date.timeIntervalSince1970.truncatingRemainder(dividingBy: 86400)
-                let endOfTheDay = startOfTheDay + 86400
-                
-                for hour in weatherWeek.hourly {
-                    if (Int(startOfTheDay) <= hour.dt && hour.dt < Int(endOfTheDay)) {
-                        days[day].hourlyWeather.append(hour)
-                    }
-                }
-            }
         }
     }
     
@@ -47,5 +38,27 @@ class WeatherViewModel: ObservableObject {
     func getSelectedDay() -> Day? {
         guard selectedDayIndex >= 0, !days.isEmpty else { return nil}
         return days[selectedDayIndex]
+    }
+    
+    func getCurrentDay() -> Day? {
+        let currentHour = Date().timeIntervalSince1970
+        for day in days {
+        
+            if (day.date.timeIntervalSince1970 - currentHour < 0) {
+                return day
+            }
+        }
+        return nil
+    }
+    
+    func getCurrentHourWeather() -> HourWeather? {
+        let currentHour = Date().timeIntervalSince1970
+        for hour in hourly {
+            // Since the array is sorted by the earliest date, we can assume that when the hour minus the current hour is smaller than 0, we hit the current hour
+            if (hour.dt - Int(currentHour) < 0) {
+                return hour
+            }
+        }
+        return nil
     }
 }
