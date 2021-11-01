@@ -18,8 +18,6 @@ struct HourWeather: Codable, Identifiable {
     let id = UUID()
     let dt: Int
     let temp: Float
-    let feels_like: Float
-    let wind_speed: Float
     let weather: [Weather]
     
     func getHour() -> String {
@@ -30,14 +28,13 @@ struct HourWeather: Codable, Identifiable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case dt, temp, feels_like, wind_speed, weather
+        case dt, temp, weather
     }
 }
 
 struct DayWeather: Codable {
     let dt: Int
     let temp: Temp
-    let wind_speed: Float
     let weather: [Weather]
 }
 
