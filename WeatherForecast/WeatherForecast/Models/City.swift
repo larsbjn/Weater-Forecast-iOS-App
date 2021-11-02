@@ -9,6 +9,7 @@ import Foundation
 
 struct City: Identifiable, Codable {
     let id = UUID()
+    var isGps = false
     let name: String
     let coord: Coord
     

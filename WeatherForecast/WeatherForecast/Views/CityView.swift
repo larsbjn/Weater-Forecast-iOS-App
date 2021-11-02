@@ -16,7 +16,11 @@ struct CityView: View {
             List {
                 ForEach(cityViewModel.cities) { city in
                     NavigationLink(destination: WeatherView(city: city)) {
-                        Text(city.name)
+                        if (city.isGps) {
+                            Text("\(city.name) \(Image(systemName: "location"))")
+                        } else {
+                            Text(city.name)
+                        }
                     }
                 }.onDelete(perform: { indexSet in
                     cityViewModel.deleteCity(indexSet)

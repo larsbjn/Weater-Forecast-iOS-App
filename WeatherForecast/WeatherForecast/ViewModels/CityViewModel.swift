@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CityViewModel : ObservableObject {
     
@@ -18,6 +19,24 @@ class CityViewModel : ObservableObject {
         }
         return []
     }()
+    
+    init() {
+        let locationManager = LocationManager()
+        locationManager.setOnLocationGranted(action: {
+            guard let location = locationManager.getLocation() else { return }
+            
+            CallCityNameByCoordinatesAPI(coord: Coord(lat: Float(location.coordinate.latitude), lon: Float(location.coordinate.longitude)), action: { cityByCoordinate in
+                guard let city = cityByCoordinate.first else { return }
+                var c = City(name: "\(city.name)", coord: Coord(lat: city.lat, lon: city.lon))
+                c.isGps = true
+                self.cities.insert(c, at: 0)
+            })
+        })
+        locationManager.setOnLocationRemoved(action: {
+            guard self.cities[0].isGps else { return }
+            self.cities.remove(at: 0)
+        })
+    }
     
     func addCity(_ name: String) -> Void {
         CallFindCityAPI(name: name, action: { cityList in
@@ -38,6 +57,4 @@ class CityViewModel : ObservableObject {
             UserDefaults.standard.set(encoded, forKey: "cities")
         }
     }
-    
-    
 }
