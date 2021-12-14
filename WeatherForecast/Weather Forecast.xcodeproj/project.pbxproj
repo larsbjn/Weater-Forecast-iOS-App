@@ -21,6 +21,7 @@
 		81DA586E2717928A005ED135 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81DA586D2717928A005ED135 /* Preview Assets.xcassets */; };
 		81DA58792717928A005ED135 /* WeatherForecastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA58782717928A005ED135 /* WeatherForecastTests.swift */; };
 		81DA58842717928A005ED135 /* WeatherForecastUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA58832717928A005ED135 /* WeatherForecastUITests.swift */; };
+		C32B889F27659F00007172CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C32B889E27659F00007172CB /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		81DA587F2717928A005ED135 /* Weather ForecastUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather ForecastUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81DA58832717928A005ED135 /* WeatherForecastUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastUITests.swift; sourceTree = "<group>"; };
 		81DA58852717928A005ED135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C32B889E27659F00007172CB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			children = (
 				81DA586827179288005ED135 /* CityView.swift */,
 				8125035027281EAC0097821A /* WeatherView.swift */,
+				C32B889E27659F00007172CB /* LaunchScreen.storyboard */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C32B889F27659F00007172CB /* LaunchScreen.storyboard in Resources */,
 				81DA586E2717928A005ED135 /* Preview Assets.xcassets in Resources */,
 				81DA586B2717928A005ED135 /* Assets.xcassets in Resources */,
 			);
