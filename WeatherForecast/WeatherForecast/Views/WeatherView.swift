@@ -12,27 +12,25 @@ struct WeatherView: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
     
     init(city: City) {
-        
         self.weatherViewModel = WeatherViewModel(city: city)
     }
     
     var body: some View {
-        VStack() {
-            Text(weatherViewModel.getCityName())
-                .font(.title)
+        let container = List {
+            VStack() {
+                Text(weatherViewModel.getCityName())
+                    .font(.title)
+                WeatherInformation(weatherViewModel: weatherViewModel)
+            }.frame(maxWidth: .infinity, alignment: .center)
+                .padding(15)
+            
+            HourlyWeather(weatherViewModel: weatherViewModel)
                 
-            WeatherInformation(weatherViewModel: weatherViewModel)
-            
-            Divider()
-                .padding(.horizontal)
-            
-            ScrollView(.vertical) {
-                HourlyWeather(weatherViewModel: weatherViewModel)
-                Divider()
-                    .padding(.horizontal)
-                DailyWeather(weatherViewModel: weatherViewModel)
-                Divider()
-                    .padding(.horizontal)
+            DailyWeather(weatherViewModel: weatherViewModel)
+        }.navigationBarTitleDisplayMode(.inline)
+        if #available(iOS 15.0, *) {
+            container.refreshable {
+                weatherViewModel.getWeatherData()
             }
         }
     }
@@ -55,8 +53,6 @@ struct HourlyWeather: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
     
     var body: some View {
-        
-        
         ScrollView(.horizontal) {
             HStack {
                 ForEach(weatherViewModel.hourly) { hour in
@@ -76,24 +72,14 @@ struct HourlyColumn: View {
             Text("\(hour.getHour())")
                 .tracking(2.0)
                 .padding(.bottom, 1.0)
-            if #available(iOS 15.0, *) {
-                Image(systemName: icon.name)
-                    .frame(width: 50.0, height: 50.0)
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(icon.primaryColor, icon.secondaryColor)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            } else {
-                // Fallback on earlier versions
-                Image(systemName: icon.name)
-                    .frame(width: 50.0, height: 50.0)
-                    .foregroundColor(icon.primaryColor)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            }
+            Icon(icon: icon)
             Text(String(format: "%.1f°", hour.temp))
         }
         .padding(.horizontal, 5.0)
     }
 }
+
+
 
 struct DailyWeather: View {
     @ObservedObject var weatherViewModel: WeatherViewModel
@@ -116,22 +102,27 @@ struct DayColumn: View {
             Text("\(day.getDate())")
                 .tracking(2.0)
                 .padding(.bottom, 1.0)
-            if #available(iOS 15.0, *) {
-                Image(systemName: icon.name)
-                    .frame(width: 50.0, height: 50.0)
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(icon.primaryColor, icon.secondaryColor)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            } else {
-                // Fallback on earlier versions
-                Image(systemName: icon.name)
-                    .frame(width: 50.0, height: 50.0)
-                    .foregroundColor(icon.primaryColor)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            }
+            Icon(icon: icon)
             Text(String(format: "H: %.1f° L: %.1f°", day.dayWeather.temp.max, day.dayWeather.temp.min))
         }
         .padding(.horizontal, 5.0)
+    }
+}
+
+struct Icon: View {
+    let icon: Weather.Icon
+    
+    var body: some View {
+        let image = Image(systemName: icon.name)
+            .frame(width: 50.0, height: 50.0)
+            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+        if #available(iOS 15.0, *) {
+            image.symbolRenderingMode(.palette)
+                 .foregroundStyle(icon.primaryColor, icon.secondaryColor)
+        } else {
+            // Fallback on earlier versions
+            image.foregroundColor(icon.primaryColor)
+        }
     }
 }
 

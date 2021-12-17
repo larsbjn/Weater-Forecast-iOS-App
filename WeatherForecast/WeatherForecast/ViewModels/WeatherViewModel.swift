@@ -15,7 +15,13 @@ class WeatherViewModel: ObservableObject {
     init(city: City) {
         self.city = city
         
+        getWeatherData()
+    }
+    
+    func getWeatherData() {
         CallWeatherForecastAPI(coord: city.coord) { [self] weatherWeek in
+            days = []
+            hourly = []
             for dayWeather in weatherWeek.daily {
                 // Add timezone offset to match the timezone with the one from the location. So UTC time + timezone offset
                 let date = Date(timeIntervalSince1970: Double(dayWeather.dt - (dayWeather.dt % 86400) - Int(weatherWeek.timezone_offset)))
