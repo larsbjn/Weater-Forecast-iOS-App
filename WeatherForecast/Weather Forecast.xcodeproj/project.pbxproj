@@ -21,6 +21,8 @@
 		81DA586E2717928A005ED135 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81DA586D2717928A005ED135 /* Preview Assets.xcassets */; };
 		81DA58792717928A005ED135 /* WeatherForecastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA58782717928A005ED135 /* WeatherForecastTests.swift */; };
 		81DA58842717928A005ED135 /* WeatherForecastUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA58832717928A005ED135 /* WeatherForecastUITests.swift */; };
+		81FFFC90276CF231001FBEF2 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81FFFC8F276CF231001FBEF2 /* PersistenceController.swift */; };
+		81FFFC93276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81FFFC91276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		81DA587F2717928A005ED135 /* Weather ForecastUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Weather ForecastUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81DA58832717928A005ED135 /* WeatherForecastUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastUITests.swift; sourceTree = "<group>"; };
 		81DA58852717928A005ED135 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		81FFFC8F276CF231001FBEF2 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		81FFFC92276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Weather_Forecast_Core_Data.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 		81DA585A27179288005ED135 = {
 			isa = PBXGroup;
 			children = (
+				81FFFC91276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodeld */,
+				81FFFC8F276CF231001FBEF2 /* PersistenceController.swift */,
 				81DA586527179288005ED135 /* WeatherForecast */,
 				81DA58772717928A005ED135 /* WeatherForecastTests */,
 				81DA58822717928A005ED135 /* WeatherForecastUITests */,
@@ -309,7 +315,9 @@
 			files = (
 				812503572728948A0097821A /* Day.swift in Sources */,
 				8125035127281EAC0097821A /* WeatherView.swift in Sources */,
+				81FFFC93276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodeld in Sources */,
 				81D71A552730ADA000BF3AC9 /* LocationManager.swift in Sources */,
+				81FFFC90276CF231001FBEF2 /* PersistenceController.swift in Sources */,
 				8125035327288D5C0097821A /* WeatherViewModel.swift in Sources */,
 				81DA586927179288005ED135 /* CityView.swift in Sources */,
 				81D7AE032729F02900591B1D /* Weather.swift in Sources */,
@@ -634,6 +642,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		81FFFC91276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				81FFFC92276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodel */,
+			);
+			currentVersion = 81FFFC92276CF284001FBEF2 /* Weather_Forecast_Core_Data.xcdatamodel */;
+			path = Weather_Forecast_Core_Data.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 81DA585B27179288005ED135 /* Project object */;
 }
