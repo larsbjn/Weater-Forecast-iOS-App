@@ -26,6 +26,10 @@ class WeatherViewModel: ObservableObject {
         }
     }
     
+    func getCityName() -> String {
+        return city.name
+    }
+    
     func getCurrentDay() -> Day? {
         let currentHour = Date().timeIntervalSince1970
         for day in days {

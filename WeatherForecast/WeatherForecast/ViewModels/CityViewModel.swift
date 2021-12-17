@@ -53,7 +53,7 @@ class CityViewModel : ObservableObject {
     
     func saveAllCities() {
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(cities){
+        if let encoded = try? encoder.encode(cities.filter({ !$0.isGps })){
             UserDefaults.standard.set(encoded, forKey: "cities")
         }
     }

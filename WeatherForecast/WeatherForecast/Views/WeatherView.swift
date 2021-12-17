@@ -8,17 +8,17 @@ import Foundation
 import SwiftUI
 
 struct WeatherView: View {
-    var city: City
+
     @ObservedObject var weatherViewModel: WeatherViewModel
     
     init(city: City) {
-        self.city = city
+        
         self.weatherViewModel = WeatherViewModel(city: city)
     }
     
     var body: some View {
         VStack() {
-            Text(city.name)
+            Text(weatherViewModel.getCityName())
                 .font(.title)
                 
             WeatherInformation(weatherViewModel: weatherViewModel)
@@ -34,9 +34,6 @@ struct WeatherView: View {
                 Divider()
                     .padding(.horizontal)
             }
-            
-            
-            
         }
     }
 }
